@@ -22,6 +22,6 @@ A tool for visualizing financial market data
 
 # Infrastructure
 
-**Angular** for the frontend
-**FastAPI** for the backend
+**Angular** for the frontend\
+**FastAPI** for the backend\
 **FireBase** for Authentication and Realtime Storage
