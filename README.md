@@ -10,7 +10,7 @@ A tool for visualizing financial market data
 
 - **Volatility Analysis**: Calculate and display measures of volatility, such as standard deviation and implied volatility, for gauging market risk
 
-- **Sentiment Analysis Integration**: Integrating NLP techniques to analyze related tweets to a selected group of assets 
+- **Sentiment Analysis Integration**: Integrating NLP techniques to analyze related tweets to a selected group of assets
 
 - **Correlation Matrices and Heatmap Visualization**: Provide a clear view of asset correlation using correlation matrices and heatmaps to measure portfolio diversification
 
