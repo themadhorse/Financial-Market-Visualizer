@@ -15,6 +15,11 @@ def register_startup_event(app: FastAPI) -> Any:
         creds = credentials.Certificate(
             os.path.join(sys.path[0], r"app\credentials.json")
         )
-        firebase_admin.initialize_app(credential=creds)
+        firebase_admin.initialize_app(
+            creds,
+            {
+                "databaseURL": "https://financial-market-visualizer-default-rtdb.asia-southeast1.firebasedatabase.app/"
+            },
+        )
 
     return _startup

@@ -4,3 +4,5 @@ matplotlib
 plotly
 fastapi
 firebase-admin
+bson
+yfinance
