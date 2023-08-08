@@ -33,6 +33,7 @@ firebase_admin.initialize_app(
 # All routers that require firebase setup must be imported after the above startup event
 from app.routers import users  # noqa: E402
 
+# Add route protection once frontend login is set up
 
 # Adding high level exception handler for all generic exceptions
 app.add_exception_handler(Exception, default_error_handler)
