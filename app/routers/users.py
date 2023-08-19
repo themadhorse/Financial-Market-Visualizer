@@ -5,7 +5,8 @@ from firebase_admin.exceptions import FirebaseError
 from bson import ObjectId
 from typing import List
 
-from ..models.user import UserModel, Stock
+from ..models.user import UserModel
+from ..models.common import Asset
 
 userDbRef = db.reference().child("users")
 
@@ -62,17 +63,17 @@ def delete_user(uid: str):
 @router.patch(
     "/portfolio",
     response_description="List of updated stocks",
-    response_model=List[Stock],
+    response_model=List[Asset],
 )
-def add_stocks_to_user(
+def add_assets_to_user(
     uid: str,
-    stocks: List[Stock]
+    stocks: List[Asset]
     #  current_user = Depends(get_firebase_user)
 ):
     # if current_user["uid"] != uid:
     #     raise HTTPException(status_code=400, detail="You may only update the portfolio of the logged in user")
     try:
-        portfolio: List[Stock] = userDbRef.child(f"{uid}/portfolio").get()
+        portfolio: List[Asset] = userDbRef.child(f"{uid}/portfolio").get()
         portfolio.extend(stocks)
 
         userDbRef.child(f"{uid}/portfolio").set(jsonable_encoder(portfolio))
@@ -88,18 +89,18 @@ def add_stocks_to_user(
 @router.delete(
     "/portfolio",
     response_description="List of updated stocks",
-    response_model=List[Stock],
+    response_model=List[Asset],
 )
-def remove_stocks_from_user(
+def remove_assets_from_user(
     uid: str,
-    stocks: List[Stock]
+    stocks: List[Asset]
     #  current_user = Depends(get_firebase_user)
 ):
     # if current_user["uid"] != uid:
     #     raise HTTPException(status_code=400, detail="You may only update the portfolio of the logged in user")
     try:
-        portfolio: List[Stock] = [
-            Stock(**stock) for stock in userDbRef.child(f"{uid}/portfolio").get()
+        portfolio: List[Asset] = [
+            Asset(**stock) for stock in userDbRef.child(f"{uid}/portfolio").get()
         ]
         updated_portfolio = [
             stock

@@ -2,22 +2,13 @@ from pydantic import BaseModel, Field
 from typing import List
 from bson import ObjectId
 
-
-class Stock(BaseModel):
-    symbol: str
-    name: str
-    quantity: int
-
-    class Config:
-        json_schema_extra = {
-            "example": {"symbol": "AAPL", "name": "Apple Inc", "quantity": 5}
-        }
+from .common import Asset
 
 
 class UserModel(BaseModel):
     uid: str = Field(default=str(ObjectId()))
     name: str
-    portfolio: List[Stock] = Field(
+    portfolio: List[Asset] = Field(
         default=[], description="List of stocks in user's portfolio"
     )
 
@@ -28,6 +19,13 @@ class UserModel(BaseModel):
         json_schema_extra = {
             "example": {
                 "name": "Harsh Kulkarni",
-                "portfolio": [{"symbol": "AAPL", "name": "Apple Inc", "quantity": 5}],
+                "portfolio": [
+                    {
+                        "symbol": "AAPL",
+                        "name": "Apple Inc",
+                        "quantity": 5,
+                        "asset_type": "EQUITY",
+                    }
+                ],
             }
         }
