@@ -5,4 +5,3 @@ plotly
 fastapi
 firebase-admin
 bson
-pstock-python
