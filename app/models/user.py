@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 from bson import ObjectId
 
 from .common import Asset
@@ -7,7 +7,10 @@ from .common import Asset
 
 class UserModel(BaseModel):
     uid: str = Field(default=str(ObjectId()))
-    name: str
+    email: str
+    photoURL: Optional[str]
+    emailVerified: bool
+    displayName: Optional[str]
     portfolio: List[Asset] = Field(
         default=[], description="List of stocks in user's portfolio"
     )
@@ -18,7 +21,10 @@ class UserModel(BaseModel):
         json_encoders = {ObjectId: str}
         json_schema_extra = {
             "example": {
-                "name": "Harsh Kulkarni",
+                "displayName": "Harsh Kulkarni",
+                "email": "harsh@email.com",
+                "photoURL": "someurl.com",
+                "emailVerified": True,
                 "portfolio": [
                     {
                         "symbol": "AAPL",

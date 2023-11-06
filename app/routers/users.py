@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from firebase_admin import db
 from firebase_admin.exceptions import FirebaseError
 from bson import ObjectId
 from typing import List
+
+from app.dependencies import get_firebase_user
 
 from ..models.user import UserModel
 from ..models.common import Asset
@@ -15,7 +17,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 @router.post("", response_description="Created User document", response_model=UserModel)
 def create_user(user: UserModel):
-    user.uid = str(ObjectId())
+    user.uid = str(ObjectId()) if user.uid is None else user.uid
     user_json = jsonable_encoder(user)
     try:
         userDbRef.child(user.uid).set(user_json)
@@ -32,10 +34,7 @@ def create_user(user: UserModel):
     response_description="User document with relevant token id",
     response_model=UserModel,
 )
-def get_user(
-    uid: str,
-    #  current_user = Depends(get_firebase_user)
-):
+def get_user(uid: str, current_user=Depends(get_firebase_user)):
     # if current_user["uid"] != uid:
     #     raise HTTPException(status_code=400, detail="You may only request data about the logged in user")
 
